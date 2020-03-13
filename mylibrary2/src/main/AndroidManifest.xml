@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sysnetph.mylibrary2" >
+
+    <application>
+        <service android:name=".function.services.Uc3Service" />
+    </application>
+</manifest>
