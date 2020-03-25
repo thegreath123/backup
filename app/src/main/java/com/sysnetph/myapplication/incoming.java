@@ -2,22 +2,13 @@ package com.sysnetph.myapplication;
 
 
 import android.os.Bundle;
-
-
 import com.sysnetph.mylibrary2.function.Uc3call;
-import com.sysnetph.mylibrary2.function.services.Corelistub;
 import com.sysnetph.mylibrary2.function.services.Uc3Service;
 import com.sysnetph.mylibrary2.function.services.callendListener;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import android.view.View;
 import android.widget.TextView;
 
-import org.linphone.core.Address;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.tools.Log;
@@ -25,8 +16,8 @@ import org.linphone.core.tools.Log;
 
 public class incoming extends AppCompatActivity implements callendListener {
 
-    private Corelistub corelistub;
-    private Call mCall;
+
+    Call mCall;
     private TextView displayname;
 
     @Override
@@ -40,8 +31,8 @@ public class incoming extends AppCompatActivity implements callendListener {
             @Override
             public void onClick(View v) {
 
-                Uc3call.acceptcall();
-                Uc3call.startActivity(incoming.this, CallActivity.class);
+                Uc3Service.acceptcall();
+                Uc3Service.startActivity(incoming.this, CallActivity.class);
             }
         });
 //        Address address = mCall.getRemoteAddress();
@@ -51,40 +42,19 @@ public class incoming extends AppCompatActivity implements callendListener {
         findViewById(R.id.decline).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Uc3call.decline();
+                Uc3Service.decline();
                 finish();
-
             }
         });
 
-
-//        corelistub =
-//                new Corelistub() {
-//                    @Override
-//                    public void onCallStateChanged(
-//                            Core core, Call call, Call.State state, String message) {
-//
-//                        if (state == Call.State.Connected) {
-//                            // This is done by the Service listener now
-//                            // startActivity(
-//                            //  new Intent(CallIncomingActivity.this, CallActivity.class));
-//                        }
-//
-//
-//                        if (Uc3Service.getCore().getCallsNb() == 0) {
-//                            finish();
-//                        }
-//                    }
-//                };
     }
 
 
 
     protected void onDestroy() {
 
-        mCall = null;
-        corelistub = null;
+        //Uc3Service = null;
+        //corelistub = null;
 
         super.onDestroy();
     }
@@ -93,9 +63,10 @@ public class incoming extends AppCompatActivity implements callendListener {
     protected void onResume() {
         super.onResume();
 
+
         Core core = Uc3Service.getCore();
         if (core != null) {
-            core.addListener(corelistub);
+
         }
         lookupCurrentCall();
         if (mCall == null) {
@@ -105,15 +76,10 @@ public class incoming extends AppCompatActivity implements callendListener {
             return;
         }
 
-        Address address = mCall.getRemoteAddress();
-        String displayName = Uc3call.getAddressDisplayName(address);
-        //ContactAvatar.displayAvatar(displayName, findViewById(R.id.avatar_layout), true);
+        String displayName = Uc3Service.getAddressDisplayName(Uc3Service.getCall().getCore().getCurrentCallRemoteAddress());
         displayname.setText(displayName);
 
-
-
-        //displayname.setText(address.asStringUriOnly());
-
+        //lookupCurrentCall();
 //        if (LinphonePreferences.instance().acceptIncomingEarlyMedia()) {
 //            if (mCall.getCurrentParams().videoEnabled()) {
 //                findViewById(R.id.avatar_layout).setVisibility(View.GONE);
@@ -130,6 +96,9 @@ public class incoming extends AppCompatActivity implements callendListener {
                         || Call.State.IncomingEarlyMedia == call.getState()) {
                     mCall = call;
                     break;
+
+
+
                 }
             }
         }

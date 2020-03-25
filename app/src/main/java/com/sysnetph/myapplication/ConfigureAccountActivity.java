@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.sysnetph.mylibrary2.function.Uc3call;
-import com.sysnetph.mylibrary2.function.services.Corelistub;
 import com.sysnetph.mylibrary2.function.services.Registration;
 import com.sysnetph.mylibrary2.function.services.Uc3Service;
 
@@ -24,7 +23,7 @@ public class ConfigureAccountActivity extends Activity implements Registration {
     private Button mConnect ;
 
     //private AccountCreator mAccountCreator;
-    private Corelistub mCoreListener;
+
 
 
     @Override
@@ -37,7 +36,7 @@ public class ConfigureAccountActivity extends Activity implements Registration {
         // As we only want to configure an existing account, no need for server URL to make requests
         // to know whether or not account exists, etc...
         //mAccountCreator =  Uc3Service.getCore().createAccountCreator(null);
-        Uc3call.inicreate();
+        Uc3Service.inicreate();
         //RegistrationListener = this;
         mUsername = findViewById(R.id.username);
         mPassword = findViewById(R.id.password);
@@ -53,36 +52,12 @@ public class ConfigureAccountActivity extends Activity implements Registration {
                     public void onClick(View v) {
                         // configureAccount();
 
-                        Uc3call.Uc3account(mUsername.getText().toString(), mPassword.getText().toString(), mDomain.getText().toString());
-                       // Uc3call.Registration(ConfigureAccountActivity.this);
+                        Uc3Service.Uc3account(mUsername.getText().toString(), mPassword.getText().toString(), mDomain.getText().toString());
+                       //Uc3call.Registration(ConfigureAccountActivity.this);
                     }
                 });
 
 
-        //Uc3Service.getInstance().registrationListener.RegActivity(Uc3Service.getCore(),Uc3Service.getProxy(),);
-            //Uc3Service.getstate();
-
-
-//
-//        mCoreListener = new Corelistub() {
-//            @Override
-//            public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState state, String message) {
-//                if (state == RegistrationState.Ok) {
-//
-//                     Uc3call.startActivity(getApplicationContext(),MainActivity.class);
-//                    //Toast.makeText(ConfigureAccountActivity.this, message, Toast.LENGTH_LONG).show();
-//                    finish();
-//                } else if (state == RegistrationState.Failed) {
-//                    //Toast.makeText(ConfigureAccountActivity.this, "Failure: " + message, Toast.LENGTH_LONG).show();
-//                    Log.d("Failure", "failerd");
-//
-//                } else if (state == RegistrationState.None) {
-//                    //Toast.makeText(ConfigureAccountActivity.this, message, Toast.LENGTH_LONG).show();
-//                }
-//
-//              // Log.d("logs",+ cfg,)
-//            }
-//        };
 
 
 
@@ -101,12 +76,12 @@ public class ConfigureAccountActivity extends Activity implements Registration {
     protected void onResume() {
         super.onResume();
 
-        Uc3Service.getCore().addListener(mCoreListener);
+       // Uc3Service.getCore().addListener(mCoreListener);
     }
 
     @Override
     protected void onPause() {
-        Uc3Service.getCore().removeListener(mCoreListener);
+        //Uc3Service.getCore().removeListener(mCoreListener);
 
         super.onPause();
     }
@@ -123,10 +98,12 @@ public class ConfigureAccountActivity extends Activity implements Registration {
 
             case 1:
                 finish();
+
                 break;
 
             case 2:
-                Toast.makeText(this, "Wrong credential", Toast.LENGTH_SHORT).show();
+                Uc3Service.getCore().clearProxyConfig();
+                Toast.makeText(this, "error login", Toast.LENGTH_SHORT).show();
                 break;
         }
 

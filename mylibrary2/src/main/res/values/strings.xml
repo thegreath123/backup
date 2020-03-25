@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Library</string>
+    <string name="c">c</string>
+    <string name="co">co</string>
+
+
 </resources>

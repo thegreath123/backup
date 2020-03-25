@@ -6,7 +6,6 @@ public interface Uc3listener {
     void onCallActivity();
     void onIncomingActivity();
     void onOutgoing();
-    void onMisscall();
 }
 
 
