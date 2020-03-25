@@ -35,6 +35,11 @@ repositories {
     maven {
         // Replace snapshots by releases for releases !
         url "https://linphone.org/snapshots/maven_repository"
+
+    }
+    maven {
+        url "https://jitpack.io"
+        credentials { username authToken }
     }
 }
 

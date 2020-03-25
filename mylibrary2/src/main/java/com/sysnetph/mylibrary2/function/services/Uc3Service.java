@@ -114,7 +114,7 @@ public class Uc3Service extends Service {
         mCoreListener = new CoreListenerStub() {
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
                 //Toast.makeText(Uc3Service.this, message, Toast.LENGTH_SHORT).show();
-                mCall = call;
+                call = mCall;
                 if (state == Call.State.IncomingReceived || state == Call.State.IncomingEarlyMedia) {
                     // Toast.makeText(Uc3Service.this, "Incoming call received, answering it automatically", Toast.LENGTH_LONG).show();
                     // For this sample we will automatically answer incoming calls
@@ -556,6 +556,21 @@ public class Uc3Service extends Service {
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
 
+    }
+
+    public static void  lookupCurrentCall() {
+        if (Uc3Service.getCore() != null) {
+            for (Call call : Uc3Service.getCore().getCalls()) {
+                if (Call.State.IncomingReceived == call.getState()
+                        || Call.State.IncomingEarlyMedia == call.getState()) {
+                    mCall = call;
+                    break;
+
+
+
+                }
+            }
+        }
     }
 
 
