@@ -1,11 +1,12 @@
-package com.sysnetph.mylibrary2.function.services;
+package com.sysnetph.sysnetsdk;
 
 
 
-public interface Uc3listener {
+public interface activityListener {
     void onCallActivity();
     void onIncomingActivity();
     void onOutgoing();
+
 }
 
 
