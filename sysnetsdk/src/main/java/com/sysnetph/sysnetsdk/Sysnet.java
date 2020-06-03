@@ -75,11 +75,11 @@ public class Sysnet extends Service {
     }
 
     public static Core getCore() {
-        return sInstance.mCore;
+        return mCore;
     }
 
     public static Call getCall() {
-        return sInstance.mcall;
+        return mcall;
     }
 
 
@@ -374,7 +374,7 @@ public class Sysnet extends Service {
         private String stringValue;
         private int intValue;
 
-        private Servicetype(String toString, int value) {
+        Servicetype(String toString, int value) {
             stringValue = toString;
             intValue = value;
         }
@@ -405,7 +405,7 @@ public class Sysnet extends Service {
 
 
 
-
+    //makecall with network
     public void makeCall(String destination, Servicetype servicetype, NetworkType networkType) {
         Address addressToCall = Sysnet.getCore().interpretUrl(destination);
         CallParams params =  Sysnet.getCore().createCallParams(null);
@@ -732,12 +732,7 @@ public class Sysnet extends Service {
 
         ProxyConfig users = Sysnet.getCore().getDefaultProxyConfig();
 
-        if (users != null){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return users != null;
     }
 
 
